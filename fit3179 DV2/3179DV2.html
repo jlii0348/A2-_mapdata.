@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes to Australian Cities</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+        .textbox3 {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 20px;
+            max-width: 600px;
+            text-align: left;
+            margin-left: 150px;
+        }
+        body {
+            background-color: rgba(124, 121, 118, 0.54);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px 50px;
+        }
+        h1 {
+            font-size: 32px;
+            margin: 0;
+        }
+        img {
+            height: 300px;
+            width: 650px;
+            object-fit: cover;
+        }
+        #description p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            padding: 20px;
+            max-width: 600px;
+            border: 3px solid black;
+            margin-top: 20px;
+            text-align: justify;
+        }
+        #vis, #vis2{
+            max-width: 400px;   
+            margin: 20px auto;
+
+        }
+        .textbox {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 20px auto;
+            max-width: 600px;  
+            text-align: center;
+        }
+        .textbox4{
+            border: 1px solid rgb(11, 1, 1);
+            
+           
+          
+            
+          
+             
+    
+        }
+        
+        #vis4 {
+        margin-right: 700px;  /* 调整you边距的大小 */
+        
+}
+
+    #vis3{
+        margin-left: 150px;
+       
+
+    }
+        
+    
+        .flex-container {
+            display: flex;
+            justify-content: space-around; /* 调整内容向左对齐 */
+    align-items: flex-start;
+    padding-left: -450px; /* 添加左侧内边距 */
+        }
+        .flex-container > div {
+    margin-right: 100px; /* 添加右侧外边距 */
+        }
+    .vis4-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#vis4, .textbox4 {
+    margin-right: auto;  /* 移除右边的自动外边距，使内容左对齐 */
+    /* 其他样式保持不变 */
+}
+    
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Routes to Australian Cities</h1>
+            <div id="description">
+                <p>This visualization is about departures, landings, route distances, passenger numbers and more for each city airport in Australia from 1984 to the present day, and will include a number of visualizations comparing the flight data for each of these airports in these cities..</p>
+            </div>
+        </div>
+        <img src="https://github.com/jlii0348/A2-_mapdata./blob/27bb170318b3a34862596e5a5dde7767468915a3/v2-c6cdf069f12c3aad2ea389d2ece3233d_r.jpg?raw=true" alt="Description of Image">
+    </header>
+    <div class="flex-container">
+        <div>
+            <div id="vis"></div>
+            <div class="textbox">This visualization compares the total distance flown by aircraft at airports belonging to each city in Australia from 1984 to 2020, and shows that BRISBANE airport has the longest distance flown on all routes, while ARMIDALE airport has the shortest distance flown on all routes.</div>
+        </div>
+        <div>
+            <div id="vis2"></div>
+            <div class="textbox">This visualization above shows the <strong>Revenue per km</strong> of routes to airports belonging to each city in Australia from 1984 to 2020, and you can see different data for each year in the dropdown bar。</div>
+        </div>
+    </div>
+    <div class="flex-container">
+        <div>
+    
+            <div id="vis3"></div>
+            <div class="textbox3">The above visualization of Average Monthly Passenger Load Factor by City in 2020 shows that during the pandemic almost no one flew, after which Passenger Load Factor increased. Only a few major cities in Australia are shown in the graph.
+    </div>
+    </div>
+    <div class="vis4-container">
+            <div id="vis4"></div>
+            <div class="textbox4">The visualization above is a heat map of Monthly Passenger Load Factor by City from 1984-2020, with lighter colors representing less Monthly Passenger Load Factor and darker colors representing more Monthly Passenger Load Factor, and with the option to select the year of interest.
+
+    </div>
+    
+    
+</body>
+</html>
+
+
+    
+   
+    
+
+    <script type="text/javascript">
+        var spec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,  
+            "height": 400,
+            "title": "Comparison of total distance flown by aircraft in different cities",
+            "data": {"url": "https://raw.githubusercontent.com/jlii0348/A2-_mapdata./main/audomcitypairs-202102.csv"},
+            "mark": "bar",
+            "encoding": {
+                "x": {"field": "City1", "type": "ordinal", "axis": {"labelAngle": -45}},
+                "y": {"aggregate": "sum", "field": "Distance_GC_(km)", "type": "quantitative"},
+                "color": {"field": "City1", "type": "nominal"},
+                "tooltip": [
+                    {"field": "City1", "type": "nominal", "title": "City"},
+                    {"aggregate": "sum", "field": "Distance_GC_(km)", "type": "quantitative", "title": "Total Distance (km)"}
+                ]
+            },
+            "config": {
+      "background": "#f2cccc"
+            }
+        };
+        vegaEmbed('#vis', spec);
+
+        var spec2 = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 400, 
+            "height": 470,
+            "title": "Comparison of RPKs in different cities",
+
+            "data": {"url": "https://raw.githubusercontent.com/jlii0348/A2-_mapdata./main/audomcitypairs-202102.csv"},
+            "transform": [
+                {"calculate": "year(datum.Year)", "as": "Year"},
+                {"filter": {"selection": "selectedYear"}}
+            ],
+            "selection": {
+                "selectedYear": {
+                    "type": "single",
+                    "fields": ["Year"],
+                    "bind": {
+                        "Year": {
+                            "input": "select",
+                            "options": [1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+                        }
+                    }
+                }
+            },
+            "mark": "bar",
+            "encoding": {
+                "y": {
+                    "field": "City1",
+                    "type": "nominal",
+                    "sort": {"op": "mean", "field": "RPKs", "order": "descending"},
+                    "axis": {"title": "City"}
+                },
+                "x": {
+                    "field": "RPKs",
+                    "type": "quantitative",
+                    "aggregate": "mean",
+                    "axis": {
+                        "title": "Average RPKs (Million)",
+                        "labelExpr": "datum.value / 1000000"
+                    }
+                },
+                "color": {"field": "City1", "type": "nominal"},
+                "tooltip": [
+                    {"field": "City1", "type": "nominal", "title": "City"},
+                    {"field": "RPKs", "type": "quantitative", "aggregate": "mean", "title": "Average RPKs"}
+                ]
+            },
+            "config": {
+      "background": "#f2cccc"
+            }
+        };
+        
+        vegaEmbed('#vis2', spec2);
+
+        var spec3 = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 550,
+            "height": 300,
+            "title": "Average Monthly Passenger Load Factor by City in 2020",
+            "data": {"url": "https://raw.githubusercontent.com/jlii0348/A2-_mapdata./main/audomcitypairs-202102.csv"}, 
+            "transform": [
+                {"filter": "datum.Year == 2020"},
+                {"filter": "datum.City1 =='ADELAIDE' || datum.City1 == 'ALBURY'|| datum.City1 == 'BRISBANE' || datum.City1 == 'CANBERRA'|| datum.City1 == 'MELBOURNE'|| datum.City1 == 'PERTH'|| datum.City1 == 'BROOME'||datum.Ciyu1 =='SYDNEY' || datum.City=='GOLD COAST'"}
+            ],
+            "mark": "line",
+            "encoding": {
+                "x": {
+                    "field": "Month_num",
+                    "type": "ordinal",
+                    "axis": {"title": "Month"},
+                    "sort": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                "y": {
+                    "field": "Passenger_Load_Factor",
+                    "type": "quantitative",
+                    "aggregate": "mean",  
+                    "axis": {"title": "Average Passenger Load Factor"}
+                },
+                "color": {
+                    "field": "City1",
+                    "type": "nominal",
+                    "legend": {"title": "City"}
+                },
+                "tooltip": [
+                    {"field": "City1", "type": "nominal", "title": "City"},
+                    {"field": "Month_num", "type": "ordinal", "title": "Month"},
+                    {"field": "Passenger_Load_Factor", "type": "quantitative", "aggregate": "mean", "title": "Average Passenger Load Factor"}
+                ]
+            },
+            "config": {
+      "background": "#f2cccc"
+        }
+    };
+    
+        vegaEmbed('#vis3', spec3);
+
+        var spec4 = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {"url": "https://raw.githubusercontent.com/jlii0348/A2-_mapdata./main/audomcitypairs-202102.csv"},
+    "title": "Monthly Passenger Load Factor by City from 1984-2020",
+    "width": 380,
+    "height": 350,
+    "selection": {
+      "selectedYear": {
+        "type": "single",
+        "fields": ["Year"],
+        "bind": {
+          "input": "select",
+          "options": [
+            1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995,
+            1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
+            2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020
+          ],
+          "name": "Select Year"
+        }
+      }
+    },
+    "transform": [
+      {"calculate": "year(datum.Year)", "as": "Year"},
+      {"filter": {"selection": "selectedYear"}}
+    ],
+    "mark": "rect",
+    "encoding": {
+      "x": {
+        "field": "Month_num",
+        "type": "ordinal",
+        "axis": {"title": "Month"},
+        "sort": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+      },
+      "y": {
+        "field": "City1",
+        "type": "nominal",
+        "axis": {"title": "City"}
+        
+      },
+      "color": {
+        "field": "Passenger_Load_Factor",
+        "type": "quantitative",
+        "scale": {"range": ["#FFFFFF", "#000000"]},
+        "legend": {"title": " Passenger Load Factor"}
+      },
+      "tooltip": [
+        {"field": "City1", "type": "nominal", "title": "City"},
+        {"field": "Month_num", "type": "ordinal", "title": "Month"},
+        {"field": "Passenger_Load_Factor", "type": "quantitative", "aggregate": "mean", "title": "Average Passenger Load Factor"}
+      ]
+    },
+    "config": {
+      "background": "#f2cccc"
+    }
+  };
+  vegaEmbed('#vis4', spec4);
+
+        
+    </script>
+</body>
+</html>
+
+       

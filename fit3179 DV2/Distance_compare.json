@@ -1,0 +1,19 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Comparison of total distance flown by aircraft in different cities",
+    "data": {"url": "https://raw.githubusercontent.com/jlii0348/A2-_mapdata./main/audomcitypairs-202102.csv"},
+    "mark": "bar",
+    
+    "encoding": {
+      "x": {"field": "City1", "type": "ordinal", "axis": {"labelAngle": -45}},
+      "y": {"aggregate": "sum", "field": "Distance_GC_(km)", "type": "quantitative"},
+      "color": {"field": "City1", "type": "nominal"},
+      "tooltip": [
+        {"field": "City1", "type": "nominal", "title": "City"},
+        {"aggregate": "sum", "field": "Distance_GC_(km)", "type": "quantitative", "title": "Total Distance (km)"}
+      ]
+    },
+    "config": {
+      "background": "#f2cccc"
+  }
+}
